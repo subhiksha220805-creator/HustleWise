@@ -1,21 +1,32 @@
-const navbarLinks = document.querySelectorAll(".nav-link");
+const navbar = document.querySelector("#navbarMenu");
+const navbarLinks = document.querySelectorAll(".navbar-nav .nav-link[href^='#']");
+let pendingNavbarTarget = null;
 
-navbarLinks.forEach(function(link) {
+navbar?.addEventListener("hidden.bs.collapse", () => {
+    if (!pendingNavbarTarget) {
+        return;
+    }
 
-    link.addEventListener("click", function() {
+    const target = pendingNavbarTarget;
+    pendingNavbarTarget = null;
+    window.history.pushState(null, "", `#${target.id}`);
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+});
 
-        const navbar = document.querySelector(".navbar-collapse");
+navbarLinks.forEach((link) => {
+    link.addEventListener("click", (event) => {
+        const target = document.querySelector(link.getAttribute("href"));
 
-        if (navbar.classList.contains("show")) {
-
-            const bsCollapse = bootstrap.Collapse.getInstance(navbar);
-
-            bsCollapse.hide();
-
+        if (!target) {
+            return;
         }
 
+        if (window.matchMedia("(max-width: 991.98px)").matches && navbar?.classList.contains("show")) {
+            event.preventDefault();
+            pendingNavbarTarget = target;
+            bootstrap.Collapse.getOrCreateInstance(navbar).hide();
+        }
     });
-
 });
 
 // Wait for the DOM to load to override the inline functions
@@ -355,6 +366,80 @@ window.addEventListener('DOMContentLoaded', () => {
         return el ? el.value : '';
     };
 
+    let scheduledDemoAt = null;
+    let demoCountdownInterval = null;
+    const demoModalElement = document.getElementById('demoModal');
+
+    const updateDemoConfirmation = () => {
+        const childName = safeVal('childName').trim().split(/[,&]/)[0].trim() || 'Your child';
+        const courseSelect = document.getElementById('courseSelect');
+        const selectedCourse = courseSelect?.selectedOptions[0]?.textContent.trim() || 'your chosen course';
+        const dateSelect = document.getElementById('dateSelect');
+        const timeValue = safeVal('timeSelect');
+        const preferredDay = (dateSelect?.value || '').toLowerCase();
+        const bookingDate = new Date();
+
+        if (preferredDay.startsWith('tomorrow')) {
+            bookingDate.setDate(bookingDate.getDate() + 1);
+        } else if (preferredDay.startsWith('day after') || preferredDay.startsWith('day_after')) {
+            bookingDate.setDate(bookingDate.getDate() + 2);
+        }
+
+        const [hours = 0, minutes = 0] = timeValue.split(':').map(Number);
+        bookingDate.setHours(hours, minutes, 0, 0);
+        scheduledDemoAt = bookingDate;
+
+        const ordinal = (day) => {
+            const remainder = day % 100;
+            const suffix = remainder >= 11 && remainder <= 13 ? 'th' : ({ 1: 'st', 2: 'nd', 3: 'rd' }[day % 10] || 'th');
+            return `${day}${suffix}`;
+        };
+
+        const weekday = bookingDate.toLocaleDateString('en-IN', { weekday: 'short' });
+        const month = bookingDate.toLocaleDateString('en-IN', { month: 'short' });
+        const twelveHour = hours % 12 || 12;
+        const meridiem = hours >= 12 ? 'PM' : 'AM';
+        const formattedTime = `${twelveHour}:${String(minutes).padStart(2, '0')} ${meridiem}`;
+        const teacherPreference = document.querySelector('input[name="teacherPref"]:checked')?.value;
+
+        document.getElementById('demoSuccessTitle').textContent = `See you in class — ${childName}'s demo is booked!`;
+        document.getElementById('demoSuccessWeekday').textContent = weekday;
+        document.getElementById('demoSuccessDate').textContent = `${ordinal(bookingDate.getDate())} ${month}`;
+        document.getElementById('demoSuccessTime').textContent = formattedTime;
+        document.getElementById('demoSuccessCourse').textContent = selectedCourse;
+        document.getElementById('demoSuccessClassType').textContent = teacherPreference === 'group'
+            ? 'Interactive group class with an expert teacher'
+            : 'Live 1:1 class with an expert teacher';
+
+        const countdownElement = document.getElementById('demoCountdown');
+        const updateCountdown = () => {
+            const remainingSeconds = Math.max(0, Math.floor((scheduledDemoAt.getTime() - Date.now()) / 1000));
+            if (remainingSeconds === 0) {
+                countdownElement.textContent = 'Your demo is starting now!';
+                window.clearInterval(demoCountdownInterval);
+                demoCountdownInterval = null;
+                return;
+            }
+
+            const days = Math.floor(remainingSeconds / 86400);
+            const hoursRemaining = Math.floor((remainingSeconds % 86400) / 3600);
+            const minutesRemaining = Math.floor((remainingSeconds % 3600) / 60);
+            const secondsRemaining = remainingSeconds % 60;
+            const dayLabel = days > 0 ? `${days}d ` : '';
+            countdownElement.textContent = `${dayLabel}${String(hoursRemaining).padStart(2, '0')}:${String(minutesRemaining).padStart(2, '0')}:${String(secondsRemaining).padStart(2, '0')}`;
+        };
+
+        window.clearInterval(demoCountdownInterval);
+        updateCountdown();
+        demoCountdownInterval = window.setInterval(updateCountdown, 1000);
+    };
+
+    demoModalElement?.addEventListener('hidden.bs.modal', () => {
+        window.clearInterval(demoCountdownInterval);
+        demoCountdownInterval = null;
+        scheduledDemoAt = null;
+    });
+
     // Override submitDemoForm
     window.submitDemoForm = function() {
         const parentName = document.getElementById('parentName');
@@ -393,6 +478,7 @@ window.addEventListener('DOMContentLoaded', () => {
             body: formData,
             headers: {
                 'Accept': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || '',
             }
         })
         .then(response => {
@@ -400,8 +486,12 @@ window.addEventListener('DOMContentLoaded', () => {
             return response.json();
         })
         .then(data => {
+            updateDemoConfirmation();
             document.getElementById('demoForm').classList.add('d-none');
             document.getElementById('successMessage').classList.remove('d-none');
+            document.getElementById('demoModalLabel').textContent = 'Booking Confirmed';
+            document.getElementById('demoModalSubtitle').textContent = 'Here’s what happens next';
+            document.getElementById('demoProgress').classList.add('d-none');
         })
         .catch(error => {
             console.error('Error:', error);

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\DemoBookingController;
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\TeacherApplicationController;
 
 Route::get('/', function () {
@@ -11,13 +12,14 @@ Route::get('/', function () {
 
 Route::get('/book-demo', function () {
     return view('book_demo');
-});
+})->name('demo.book');
 Route::post('/book-demo', [DemoBookingController::class, 'store']);
+Route::get('/courses/{slug}', [CourseController::class, 'show'])->name('courses.show');
 Route::delete('/demo-bookings/{demoBooking}', [DemoBookingController::class, 'destroy'])->name('demo-bookings.destroy');
 
 Route::get('/teacher-login', function () {
     return view('teacher_login');
-});
+})->name('teacher.join');
 Route::post('/teacher-login', [TeacherApplicationController::class, 'store']);
 Route::delete('/teacher-applications/{teacherApplication}', [TeacherApplicationController::class, 'destroy'])->name('teacher-applications.destroy');
 
