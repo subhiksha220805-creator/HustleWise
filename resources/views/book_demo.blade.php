@@ -6,13 +6,13 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description" content="Book a free HustleWise demo class and discover a fun way for your child to learn.">
     <title>Book a Free Demo | HustleWise</title>
-    <link rel="icon" type="image/png" href="{{ asset('logo.png') }}">
+    <link rel="icon" type="image/png" href="{{ secure_asset('logo.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('style.css?v=demo-booking-page') }}">
+    <link rel="stylesheet" href="{{ secure_asset('style.css?v=demo-booking-page') }}">
     <style>
         :root { --demo-orange:#ff7a00; --demo-ink:#242424; }
         body { background:#fffaf5; color:var(--demo-ink); }
@@ -66,7 +66,7 @@
 <body class="with-demo-bottom-bar">
     <nav class="navbar demo-nav shadow-sm sticky-top">
         <div class="container py-2 d-flex justify-content-between align-items-center">
-            <a class="demo-page-brand d-flex align-items-center gap-2" href="{{ url('/') }}"><img src="{{ asset('logo.png') }}" alt="HustleWise" height="46"><span class="text-dark">Hustle<span>Wise</span></span></a>
+            <a class="demo-page-brand d-flex align-items-center gap-2" href="{{ url('/') }}"><img src="{{ secure_asset('logo.png') }}" alt="HustleWise" height="46"><span class="text-dark">Hustle<span>Wise</span></span></a>
             <a href="{{ url('/') }}" class="btn btn-outline-secondary rounded-pill px-4">← Back to home</a>
         </div>
     </nav>
@@ -128,7 +128,7 @@
                             </div>
                             <div class="demo-step" id="demoStep2">
                                 <h3 class="h5 fw-bold mb-3">2. Choose a class style</h3>
-                                <fieldset class="mb-3"><legend class="form-label fs-6">Choose how your child would like to learn</legend><div class="demo-mode-options"><label class="demo-mode-card"><input type="radio" name="teacherPref" value="1 on 1" checked><img src="{{ asset('demo-one-to-one.png') }}" alt=""><span class="demo-mode-copy"><strong>One-on-one</strong><small>Personal attention in a focused lesson.</small></span></label><label class="demo-mode-card"><input type="radio" name="teacherPref" value="group"><img src="{{ asset('demo-group-class.png') }}" alt=""><span class="demo-mode-copy"><strong>Group class</strong><small>Learn and share ideas with other students.</small></span></label></div></fieldset>
+                                <fieldset class="mb-3"><legend class="form-label fs-6">Choose how your child would like to learn</legend><div class="demo-mode-options"><label class="demo-mode-card"><input type="radio" name="teacherPref" value="1 on 1" checked><img src="{{ secure_asset('demo-one-to-one.png') }}" alt=""><span class="demo-mode-copy"><strong>One-on-one</strong><small>Personal attention in a focused lesson.</small></span></label><label class="demo-mode-card"><input type="radio" name="teacherPref" value="group"><img src="{{ secure_asset('demo-group-class.png') }}" alt=""><span class="demo-mode-copy"><strong>Group class</strong><small>Learn and share ideas with other students.</small></span></label></div></fieldset>
                                 <label for="demoFeedback" class="form-label">Anything you’d like us to know? <span class="text-secondary">(optional)</span></label><textarea class="form-control mb-4" id="demoFeedback" rows="3" placeholder="Share a goal or learning preference"></textarea>
                                 <div class="d-flex justify-content-between"><button type="button" class="btn btn-outline-secondary rounded-pill px-4" onclick="demoPrevStep(2,1)">← Back</button><button type="button" class="btn btn-orange btn-lg rounded-pill px-4" onclick="demoNextStep(2,3)">Next <i class="bi bi-arrow-right"></i></button></div>
                             </div>
@@ -160,7 +160,7 @@
     <div class="modal fade" id="alertModal" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-dialog-centered"><div class="modal-content border-0 rounded-4 shadow"><div class="modal-body text-center p-5"><h4 class="fw-bold mb-3" id="modalTitle">Alert</h4><p class="text-secondary mb-4 fs-5" id="modalMessage">Please check your details and try again.</p><button type="button" class="btn btn-orange rounded-pill px-5" data-bs-dismiss="modal">Continue</button></div></div></div></div>
     @include('partials.footer')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ asset('script.js') }}"></script>
+    <script src="{{ secure_asset('script.js') }}"></script>
     <script>
         let currentDemoStep = 1;
         function showAlert(title, message) {

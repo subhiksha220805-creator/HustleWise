@@ -6,13 +6,13 @@
     <meta name="description" content="Teach with HustleWise. Share your skills and help children learn with confidence.">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Teach with HustleWise</title>
-    <link rel="icon" type="image/png" href="{{ asset('logo.png') }}">
+    <link rel="icon" type="image/png" href="{{ secure_asset('logo.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('style.css?v=all-sections-responsive-spacing') }}">
+    <link rel="stylesheet" href="{{ secure_asset('style.css?v=all-sections-responsive-spacing') }}">
     <style>
         :root { --teacher-orange: #ff7a00; --teacher-ink: #222; --teacher-muted: #6c757d; }
         body { background: #fffaf5; color: var(--teacher-ink); }
@@ -64,7 +64,7 @@
     <nav class="navbar navbar-expand-lg teacher-nav shadow-sm sticky-top">
         <div class="container py-2">
             <a class="teacher-brand d-flex align-items-center gap-2" href="{{ url('/') }}">
-                <img src="{{ asset('logo.png') }}" alt="HustleWise" height="46">
+                <img src="{{ secure_asset('logo.png') }}" alt="HustleWise" height="46">
                 <span>Hustle<span>Wise</span></span>
             </a>
             <a href="{{ url('/') }}" class="btn btn-outline-secondary rounded-pill px-4">← Back to home</a>
@@ -79,7 +79,7 @@
                 <p class="teacher-lead mt-4">Bring your knowledge, warmth and creativity to online classes that make learning meaningful. Get to know the role and apply to join our teaching community.</p>
                 <a class="btn btn-orange btn-lg rounded-pill px-4 mt-2" href="#teacher-application">Start your application <span aria-hidden="true">→</span></a>
             </div>
-            <div class="col-lg-6"><div class="teacher-hero-photo"><img src="{{ asset('teacher-high-five.png') }}" alt="Teacher celebrating a student's answer with a high five"><span class="teacher-photo-note"><i class="bi bi-heart-fill me-2" style="color:#ff7a00"></i>Make learning meaningful</span></div></div>
+            <div class="col-lg-6"><div class="teacher-hero-photo"><img src="{{ secure_asset('teacher-high-five.png') }}" alt="Teacher celebrating a student's answer with a high five"><span class="teacher-photo-note"><i class="bi bi-heart-fill me-2" style="color:#ff7a00"></i>Make learning meaningful</span></div></div>
         </div>
         </div>
     </header>
@@ -147,11 +147,11 @@
                     <button class="teacher-role-tab" type="button" id="learnerTab" role="tab" aria-selected="false" aria-controls="learnerPanel" onclick="showTeacherRole('learner')">Learner</button>
                 </div>
                 <div class="teacher-role-panel active" id="mentorPanel" role="tabpanel" aria-labelledby="mentorTab">
-                    <img class="teacher-role-image" src="{{ asset('mentor-teacher-student.png') }}" alt="Teacher mentoring a student">
+                    <img class="teacher-role-image" src="{{ secure_asset('mentor-teacher-student.png') }}" alt="Teacher mentoring a student">
                     <div class="teacher-role-copy"><span class="section-label">YOUR IMPACT</span><h3 class="h3 fw-bold mt-2">As a mentor</h3><p class="text-secondary">Be the encouraging guide who helps each child feel ready to try.</p><ul class="text-secondary mb-0"><li class="mb-2">Lead friendly online lessons from home.</li><li class="mb-2">Coach children through practice and helpful feedback.</li><li>Celebrate progress and growing confidence.</li></ul></div>
                 </div>
                 <div class="teacher-role-panel" id="learnerPanel" role="tabpanel" aria-labelledby="learnerTab" hidden>
-                    <img class="teacher-role-image" src="{{ asset('learner-graduate.png') }}" alt="Learner celebrating a graduation milestone">
+                    <img class="teacher-role-image" src="{{ secure_asset('learner-graduate.png') }}" alt="Learner celebrating a graduation milestone">
                     <div class="teacher-role-copy"><span class="section-label">GROW WITH US</span><h3 class="h3 fw-bold mt-2">As a learner</h3><p class="text-secondary">Keep discovering better ways to support young learners.</p><ul class="text-secondary mb-0"><li class="mb-2">Join onboarding and practical teaching guidance.</li><li class="mb-2">Build your classroom and online teaching skills.</li><li>Share ideas with the HustleWise teaching community.</li></ul></div>
                 </div>
             </div>
@@ -183,7 +183,7 @@
         <div class="modal-dialog modal-dialog-centered"><div class="modal-content border-0 rounded-4 shadow"><div class="modal-body text-center p-5"><h4 class="fw-bold mb-3" id="modalTitle">Alert</h4><p class="text-secondary mb-4 fs-5" id="modalMessage">Please check your details and try again.</p><button type="button" class="btn teacher-orange-btn rounded-pill px-5" data-bs-dismiss="modal">Continue</button></div></div></div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ asset('script.js') }}"></script>
+    <script src="{{ secure_asset('script.js') }}"></script>
     <script>
         function teacherApplicationStep(stepNumber) {
             return document.querySelector(`[data-teacher-step="${stepNumber}"]`);

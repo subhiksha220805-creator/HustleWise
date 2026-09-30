@@ -214,7 +214,7 @@
                             z-index:2;
                          ">
 
-                        <img src="{{ asset('home-learning-group.png') }}"
+                        <img src="{{ secure_asset('home-learning-group.png') }}"
                              class="img-fluid rounded-4"
                              alt="Teacher helping students learn together in a classroom">
 
@@ -755,7 +755,7 @@
                         class="btn btn-orange mt-3">Join as a Teacher →</a>
                 </div>
                 <div class="col-lg-6 text-center">
-                    <img src="{{ asset('teacher_image.jpg') }}"
+                    <img src="{{ secure_asset('teacher_image.jpg') }}"
                         class="img-fluid rounded-4 shadow"
                         alt="Teacher holding orange book">
                 </div>

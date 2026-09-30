@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Explore the {{ $course['title'] }} learning roadmap at HustleWise.">
     <title>{{ $course['title'] }} Roadmap | HustleWise</title>
-    <link rel="icon" type="image/png" href="{{ asset('logo.png') }}">
+    <link rel="icon" type="image/png" href="{{ secure_asset('logo.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('style.css?v=course-roadmap') }}">
+    <link rel="stylesheet" href="{{ secure_asset('style.css?v=course-roadmap') }}">
     <style>
         :root { --roadmap-accent:{{ $course['color'] }}; }
         body { background:#fffaf5; }
@@ -54,7 +54,7 @@
 <body class="with-demo-bottom-bar">
     <nav class="navbar roadmap-nav shadow-sm sticky-top">
         <div class="container py-2 d-flex justify-content-between align-items-center">
-            <a class="roadmap-brand d-flex align-items-center gap-2" href="{{ url('/') }}"><img src="{{ asset('logo.png') }}" alt="HustleWise" height="46"><span>Hustle<span>Wise</span></span></a>
+            <a class="roadmap-brand d-flex align-items-center gap-2" href="{{ url('/') }}"><img src="{{ secure_asset('logo.png') }}" alt="HustleWise" height="46"><span>Hustle<span>Wise</span></span></a>
             <a href="{{ url('/') }}#courses" class="btn btn-outline-secondary rounded-pill px-4">← All courses</a>
         </div>
     </nav>
