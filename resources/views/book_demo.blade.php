@@ -160,7 +160,7 @@
     <div class="modal fade" id="alertModal" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-dialog-centered"><div class="modal-content border-0 rounded-4 shadow"><div class="modal-body text-center p-5"><h4 class="fw-bold mb-3" id="modalTitle">Alert</h4><p class="text-secondary mb-4 fs-5" id="modalMessage">Please check your details and try again.</p><button type="button" class="btn btn-orange rounded-pill px-5" data-bs-dismiss="modal">Continue</button></div></div></div></div>
     @include('partials.footer')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ secure_asset('script.js') }}"></script>
+    <script src="{{ secure_asset('script.js?v=submit-error-details') }}"></script>
     <script>
         let currentDemoStep = 1;
         function showAlert(title, message) {

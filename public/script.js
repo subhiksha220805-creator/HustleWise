@@ -481,8 +481,19 @@ window.addEventListener('DOMContentLoaded', () => {
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || '',
             }
         })
-        .then(response => {
-            if (!response.ok) throw new Error("Network response was not ok");
+        .then(async response => {
+            if (!response.ok) {
+                const responseText = await response.text();
+                let message = `Booking failed (HTTP ${response.status}).`;
+                try {
+                    const errorData = JSON.parse(responseText);
+                    message = errorData.message || Object.values(errorData.errors || {}).flat()[0] || message;
+                } catch (error) {
+                    console.error('The demo booking endpoint returned a non-JSON error.', error, responseText);
+                    if (response.status >= 500) message = 'The server could not save the booking. Check the Render service logs and database connection.';
+                }
+                throw new Error(message);
+            }
             return response.json();
         })
         .then(data => {
@@ -495,7 +506,7 @@ window.addEventListener('DOMContentLoaded', () => {
         })
         .catch(error => {
             console.error('Error:', error);
-            if(typeof showAlert === 'function') showAlert('Error', 'Failed to submit demo. Please try again later.');
+            if(typeof showAlert === 'function') showAlert('Booking not submitted', error.message || 'Please check your details and try again.');
         });
     };
 
