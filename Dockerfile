@@ -79,5 +79,6 @@ ENV LOG_CHANNEL=stderr
 
 EXPOSE 80
 
-# Start PHP-FPM and Nginx
-CMD ["sh", "-c", "php-fpm -D && nginx -g 'daemon off;'"]
+# Create the default SQLite database when SQLite is selected, apply pending
+# schema migrations, then start PHP-FPM and Nginx.
+CMD ["sh", "-c", "if [ \"${DB_CONNECTION:-sqlite}\" = \"sqlite\" ]; then SQLITE_PATH=\"${DB_DATABASE:-database/database.sqlite}\"; if [ \"$SQLITE_PATH\" != \":memory:\" ]; then mkdir -p \"$(dirname \"$SQLITE_PATH\")\" && touch \"$SQLITE_PATH\" && chown www-data:www-data \"$SQLITE_PATH\"; fi; fi && php artisan migrate --force && php-fpm -D && nginx -g 'daemon off;'"]
