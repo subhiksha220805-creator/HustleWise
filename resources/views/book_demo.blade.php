@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ secure_asset('style.css?v=demo-booking-page') }}">
+    <link rel="stylesheet" href="{{ secure_asset('style.css?v=course-dropdown-class-picker') }}">
     <style>
         :root { --demo-orange:#ff7a00; --demo-ink:#242424; }
         body { background:#fffaf5; color:var(--demo-ink); }
@@ -40,6 +40,7 @@
         .demo-class-select { display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.55rem; }
         .demo-class-button { border:1px solid #e7e1dc;background:#fff;border-radius:10px;padding:.7rem .3rem;color:#454545; }
         .demo-class-button:hover,.demo-class-button.selected { border-color:var(--demo-orange);background:#fff1e3;color:#d65f00; }
+        .demo-class-button:focus-visible { outline:3px solid #ffbf80;outline-offset:2px; }
         .demo-mode-options { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.9rem;margin-bottom:1.2rem; }
         .demo-mode-card { display:flex;align-items:center;gap:.85rem;min-height:145px;padding:.8rem 1rem;border:1px solid #e7e1dc;border-radius:16px;background:#fff;cursor:pointer;transition:border-color .2s,background .2s,transform .2s; }
         .demo-mode-card:hover { transform:translateY(-2px); }
@@ -123,7 +124,7 @@
                             <div class="demo-step active" id="demoStep1">
                                 <h3 class="h5 fw-bold mb-3">1. Choose a course</h3>
                                 <label for="courseSelect" class="form-label">What would your child like to learn?</label>
-                                <select class="form-select mb-4" id="courseSelect" required><option value="">Choose a course...</option><option value="public-speaking" {{ request('course') === 'public-speaking' ? 'selected' : '' }}>Public Speaking</option><option value="creative-writing" {{ request('course') === 'creative-writing' ? 'selected' : '' }}>Creative Writing</option><option value="coding" {{ request('course') === 'coding' ? 'selected' : '' }}>Coding</option><option value="hustlewise-english" {{ request('course') === 'hustlewise-english' ? 'selected' : '' }}>HustleWise English</option><option value="mathematics" {{ request('course') === 'maths' ? 'selected' : '' }}>Mathematics</option><option value="business-english" {{ request('course') === 'business-english' ? 'selected' : '' }}>Business English</option><option value="music" {{ request('course') === 'music' ? 'selected' : '' }}>Music</option><option value="spoken-english" {{ request('course') === 'spoken-english' ? 'selected' : '' }}>Spoken English</option></select>
+                                <select class="form-select mb-4" id="courseSelect" required><option value="">Choose a course...</option><option value="public-speaking" {{ request('course') === 'public-speaking' ? 'selected' : '' }}>Public Speaking</option><option value="creative-writing" {{ request('course') === 'creative-writing' ? 'selected' : '' }}>Creative Writing</option><option value="coding" {{ request('course') === 'coding' ? 'selected' : '' }}>Coding</option><option value="hustlewise-english" {{ request('course') === 'hustlewise-english' ? 'selected' : '' }}>HustleWise English</option><option value="maths" {{ request('course') === 'maths' ? 'selected' : '' }}>Maths</option><option value="business-english" {{ request('course') === 'business-english' ? 'selected' : '' }}>Business English</option><option value="music" {{ request('course') === 'music' ? 'selected' : '' }}>Music</option><option value="spoken-english" {{ request('course') === 'spoken-english' ? 'selected' : '' }}>Spoken English</option></select>
                                 <div class="d-flex justify-content-end"><button type="button" class="btn btn-orange btn-lg rounded-pill px-4" onclick="demoNextStep(1,2)">Next <i class="bi bi-arrow-right"></i></button></div>
                             </div>
                             <div class="demo-step" id="demoStep2">
@@ -134,7 +135,7 @@
                             </div>
                             <div class="demo-step" id="demoStep3">
                                 <h3 class="h5 fw-bold mb-3">3. Pick a level and time</h3>
-                                <label for="classSelect" class="form-label">Current class or category</label><select class="form-select mb-3" id="classSelect" required><option value="">Choose a class...</option>@for ($class = 1; $class <= 12; $class++)<option value="Class {{ $class }}">Class {{ $class }}</option>@endfor<option value="Studying">Studying</option><option value="Working">Working</option></select>
+                                <fieldset class="mb-4"><legend class="form-label fs-6">Select your child’s class</legend><div class="demo-class-select" id="demoClassOptions"><button type="button" class="demo-class-button" data-value="LKG">LKG</button><button type="button" class="demo-class-button" data-value="UKG">UKG</button>@for ($class = 1; $class <= 12; $class++)<button type="button" class="demo-class-button" data-value="Class {{ $class }}">Class {{ $class }}</button>@endfor<button type="button" class="demo-class-button" data-value="Dropper">Dropper</button><button type="button" class="demo-class-button" data-value="Adult">Adult</button></div><input type="hidden" id="classSelect" value=""></fieldset>
                                 <div class="row g-3 mb-4"><div class="col-md-6"><label for="dateSelect" class="form-label">Preferred day</label><select class="form-select" id="dateSelect" required><option value="">Choose a day...</option><option value="today">Today</option><option value="tomorrow">Tomorrow</option><option value="day_after">Day after tomorrow</option></select></div><div class="col-md-6"><label for="timeSelect" class="form-label">Preferred time</label><input class="form-control" type="time" id="timeSelect" required></div></div>
                                 <div class="d-flex justify-content-between"><button type="button" class="btn btn-outline-secondary rounded-pill px-4" onclick="demoPrevStep(3,2)">← Back</button><button type="button" class="btn btn-orange btn-lg rounded-pill px-4" onclick="demoNextStep(3,4)">Next <i class="bi bi-arrow-right"></i></button></div>
                             </div>
@@ -163,6 +164,13 @@
     <script src="{{ secure_asset('script.js?v=submit-error-details') }}"></script>
     <script>
         let currentDemoStep = 1;
+        document.querySelectorAll('#demoClassOptions .demo-class-button').forEach((button) => {
+            button.addEventListener('click', () => {
+                document.querySelectorAll('#demoClassOptions .demo-class-button').forEach((option) => option.classList.remove('selected'));
+                button.classList.add('selected');
+                document.getElementById('classSelect').value = button.dataset.value;
+            });
+        });
         function showAlert(title, message) {
             document.getElementById('modalTitle').textContent = title;
             document.getElementById('modalMessage').textContent = message;
@@ -170,6 +178,10 @@
         }
         function demoNextStep(current, next) {
             const step = document.getElementById(`demoStep${current}`);
+            if (current === 3 && !document.getElementById('classSelect').value) {
+                showAlert('Class required', 'Please select your child’s class to continue.');
+                return;
+            }
             const required = step.querySelectorAll('input[required], select[required], textarea[required]');
             for (const field of required) { if (!field.checkValidity()) { field.reportValidity(); return; } }
             step.classList.remove('active');

@@ -18,7 +18,7 @@
         href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=all-sections-responsive-spacing">
+    <link rel="stylesheet" href="style.css?v=course-dropdown-class-picker">
 </head>
 <body class="with-demo-bottom-bar">
     <!-- nav -->
@@ -43,9 +43,19 @@
                         <a class="nav-link active"
                             href="#home">Home</a>
                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link"
-                            href="#courses">Courses</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#courses" id="coursesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Courses</a>
+                        <ul class="dropdown-menu dropdown-menu-end course-nav-menu" aria-labelledby="coursesDropdown">
+                            <li><a class="dropdown-item" href="{{ route('courses.show', 'public-speaking') }}"><i class="bi bi-mic-fill"></i><span><strong>Public Speaking</strong><small>K to 12 · Build confident voices</small></span></a></li>
+                            <li><a class="dropdown-item" href="{{ route('courses.show', 'spoken-english') }}"><i class="bi bi-chat-dots-fill"></i><span><strong>Spoken English</strong><small>K to 12 &amp; adults · Speak fluently</small></span></a></li>
+                            <li><a class="dropdown-item" href="{{ route('courses.show', 'creative-writing') }}"><i class="bi bi-pencil-square"></i><span><strong>Creative Writing</strong><small>K to 12 · Create stories</small></span></a></li>
+                            <li><a class="dropdown-item" href="{{ route('courses.show', 'hustlewise-english') }}"><i class="bi bi-book-half"></i><span><strong>HustleWise English</strong><small>K to 12 · Read, write and grow</small></span></a></li>
+                            <li><a class="dropdown-item" href="{{ route('courses.show', 'maths') }}"><i class="bi bi-calculator-fill"></i><span><strong>Maths</strong><small>K to 12 &amp; adults · Think logically</small></span></a></li>
+                            <li><a class="dropdown-item" href="{{ route('courses.show', 'coding') }}"><i class="bi bi-code-slash"></i><span><strong>Coding</strong><small>K to 12 &amp; adults · Make projects</small></span></a></li>
+                            <li><a class="dropdown-item" href="{{ route('courses.show', 'music') }}"><i class="bi bi-music-note-beamed"></i><span><strong>Music</strong><small>Explore rhythm and creativity</small></span></a></li>
+                            <li><a class="dropdown-item" href="{{ route('courses.show', 'business-english') }}"><i class="bi bi-briefcase-fill"></i><span><strong>Business English</strong><small>Adults · Communicate at work</small></span></a></li>
+                            <li><a class="dropdown-item course-menu-all" href="#courses">Explore all courses <i class="bi bi-arrow-down-right"></i></a></li>
+                        </ul>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link"
@@ -1245,7 +1255,7 @@
                                     <option value="creative-writing">Creative Writing</option>
                                     <option value="coding">Coding</option>
                                     <option value="hustlewise-english">HustleWise English</option>
-                                    <option value="mathematics">Mathematics</option>
+                                    <option value="maths">Maths</option>
                                     <option value="business-english">Business English</option>
                                     <option value="music">Music</option>
                                     <option value="spoken-english">Spoken English</option>
@@ -1323,6 +1333,16 @@
                                 id="classSelection">
                                 <button type="button"
                                     class="class-option"
+                                    data-value="LKG">
+                                    LKG
+                                </button>
+                                <button type="button"
+                                    class="class-option"
+                                    data-value="UKG">
+                                    UKG
+                                </button>
+                                <button type="button"
+                                    class="class-option"
                                     data-value="Class 1">
                                     Class 1
                                 </button>
@@ -1384,16 +1404,8 @@
                                     data-value="Class 12">
                                     Class 12
                                 </button>
-                                <button type="button"
-                                    class="class-option"
-                                    data-value="Studying">
-                                    Studying
-                                </button>
-                                <button type="button"
-                                    class="class-option"
-                                    data-value="Working">
-                                    Working
-                                </button>
+                                <button type="button" class="class-option" data-value="Dropper">Dropper</button>
+                                <button type="button" class="class-option" data-value="Adult">Adult</button>
                             </div>
                             <input type="hidden"
                                 id="classSelect"
